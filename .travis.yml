@@ -1,0 +1,30 @@
+language: node_js
+node_js: 8
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - yarn
+
+script:
+  - yarn build
+  - mkdir -p dist/upload/js
+  - mkdir -p dist/upload/css
+  - mv dist/gitment.browser.js dist/upload/js/gitment.browser.js
+  - mv dist/gitment.browser.min.js dist/upload/js/gitment.browser.min.js
+  - mv style/default.css dist/upload/css/default.css
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  local-dir: dist/upload
+  github-token: $GH_TOKEN
+  on:
+    branch:
+      - master
+
+branches:
+  only:
+    - master
